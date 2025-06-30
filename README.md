@@ -27,7 +27,7 @@ pkg install openjdk-21 gradle git aapt apksigner dx ecj
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/NebulaFiles.git
+git clone https://github.com/FAeN399/NebulaFiles.git
 cd NebulaFiles
 ```
 
@@ -138,4 +138,4 @@ Apache License 2.0 - See LICENSE file for details
 
 ## Support
 
-Report issues at: https://github.com/yourusername/NebulaFiles/issues
+Report issues at: https://github.com/FAeN399/NebulaFiles/issues
