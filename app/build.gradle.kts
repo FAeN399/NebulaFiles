@@ -70,6 +70,11 @@ android {
             "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
         )
     }
+    
+    ksp {
+        arg("dagger.fastInit", "true")
+        arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
+    }
 
     buildFeatures {
         compose = true
