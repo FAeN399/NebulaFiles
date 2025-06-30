@@ -1,0 +1,11 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Letter N for Nebula Files, centered in 108dp viewport -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,68 L38,40 L44,40 L58,60 L58,40 L64,40 L64,68 L58,68 L44,48 L44,68 Z"/>
+</vector>

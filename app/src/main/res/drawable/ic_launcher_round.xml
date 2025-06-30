@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    
+    <!-- Background circle -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M24,4 C13.51,4 5,12.51 5,23 C5,33.49 13.51,42 24,42 C34.49,42 43,33.49 43,23 C43,12.51 34.49,4 24,4Z"/>
+    
+    <!-- Letter N for Nebula -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M17,31 L17,17 L20.5,17 L27,27 L27,17 L30.5,17 L30.5,31 L27,31 L20.5,21 L20.5,31 Z"/>
+</vector>
