@@ -1,0 +1,73 @@
+// Simplified build file for Termux
+apply plugin: 'base'
+
+tasks.register('buildApk') {
+    doLast {
+        def manifestFile = file("app/src/main/AndroidManifest.xml")
+        def resourceDir = file("app/src/main/res")
+        def sourceDir = file("app/src/main/java")
+        def buildDir = file("build")
+        def genDir = file("build/gen")
+        def classesDir = file("build/classes")
+        
+        // Clean build directory
+        delete buildDir
+        mkdir buildDir
+        mkdir genDir
+        mkdir classesDir
+        
+        // 1. Generate R.java
+        exec {
+            commandLine 'aapt', 'package', '-f', '-m',
+                '-J', genDir.absolutePath,
+                '-M', manifestFile.absolutePath,
+                '-S', resourceDir.absolutePath,
+                '-I', '/data/data/com.termux/files/usr/share/aapt/android.jar'
+        }
+        
+        // 2. Compile Java/Kotlin files
+        def sourceFiles = fileTree(dir: sourceDir, include: '**/*.java').files + 
+                         fileTree(dir: genDir, include: '**/*.java').files
+        
+        if (!sourceFiles.isEmpty()) {
+            exec {
+                commandLine 'ecj', '-d', classesDir.absolutePath,
+                    '-classpath', '/data/data/com.termux/files/usr/share/aapt/android.jar',
+                    '-source', '1.8', '-target', '1.8',
+                    *sourceFiles.collect { it.absolutePath }
+            }
+        }
+        
+        // 3. Create DEX
+        exec {
+            commandLine 'dx', '--dex', 
+                "--output=${buildDir}/classes.dex",
+                classesDir.absolutePath
+        }
+        
+        // 4. Package resources
+        exec {
+            commandLine 'aapt', 'package', '-f',
+                '-M', manifestFile.absolutePath,
+                '-S', resourceDir.absolutePath,
+                '-I', '/data/data/com.termux/files/usr/share/aapt/android.jar',
+                '-F', "${buildDir}/app-unsigned.apk"
+        }
+        
+        // 5. Add DEX to APK
+        exec {
+            workingDir buildDir
+            commandLine 'zip', '-r', 'app-unsigned.apk', 'classes.dex'
+        }
+        
+        // 6. Sign APK
+        exec {
+            commandLine 'apksigner', 'sign',
+                '--ks-pass', 'pass:android',
+                '--out', "${buildDir}/NebulaFiles-debug.apk",
+                "${buildDir}/app-unsigned.apk"
+        }
+        
+        println "APK built successfully: ${buildDir}/NebulaFiles-debug.apk"
+    }
+}
