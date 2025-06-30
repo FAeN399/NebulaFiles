@@ -50,7 +50,7 @@
             android:authorities="${applicationId}.workmanager-init"
             android:enabled="false"
             android:exported="false"
-            tools:replace="android:authorities" />
+            tools:node="remove" />
 
         <!-- File Provider for sharing -->
         <provider
