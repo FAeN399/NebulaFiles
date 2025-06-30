@@ -1,5 +1,7 @@
 package com.nebula.files.di
 
+import com.nebula.files.data.provider.TermuxFileProvider
+import com.nebula.files.data.repository.FileOperationRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,7 +12,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
     
-    // Add any app-wide dependencies here
-    // For now, the providers are using @Inject constructors
+    @Provides
+    @Singleton
+    fun provideTermuxFileProvider(): TermuxFileProvider = TermuxFileProvider()
     
+    @Provides
+    @Singleton
+    fun provideFileOperationRepository(): FileOperationRepository = FileOperationRepository()
 }
