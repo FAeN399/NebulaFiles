@@ -27,12 +27,12 @@ if (sdkDir != null) {
 
 android {
     namespace = "com.nebula.files"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.nebula.files"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
 
@@ -120,4 +120,32 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
+}
+
+// Quantum build optimizations - enlighten KSP about the true nature of inheritance
+ksp {
+    arg("dagger.fastInit", "true")
+    arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
+    arg("room.incremental", "true")
+    arg("room.expandProjection", "true")
+}
+
+// Force classpath ordering to prevent type resolution paradox
+configurations.all {
+    resolutionStrategy {
+        force("androidx.lifecycle:lifecycle-service:2.7.0")
+        force("androidx.lifecycle:lifecycle-runtime:2.7.0")
+        force("androidx.lifecycle:lifecycle-common:2.7.0")
+    }
+}
+
+// Quantum memory optimization to prevent type cache eviction at 3-4 minutes
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "11"
+        freeCompilerArgs += listOf(
+            "-Xjvm-default=all",
+            "-opt-in=kotlin.ExperimentalStdlibApi"
+        )
+    }
 }

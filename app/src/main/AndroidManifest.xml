@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NebulaFiles"
         android:requestLegacyExternalStorage="true"
-        tools:targetApi="35">
+        tools:targetApi="34">
         
         <activity
             android:name=".MainActivity"
@@ -65,7 +65,7 @@
 
         <!-- Foreground Service for file operations -->
         <service
-            android:name=".data.service.FileOperationService"
+            android:name=".data.service.HiltFileOperationService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
